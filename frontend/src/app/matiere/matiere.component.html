@@ -1,0 +1,34 @@
+<!-- matiere.component.html -->
+<div class="container">
+    
+    <div class="row">
+      <!-- Colonne du formulaire -->
+      <div class="col-md-4">
+        <h2>{{ isUpdating ? 'Update' : 'Add New' }}</h2>
+        <form (ngSubmit)="isUpdating ? onUpdateMatiere() : onAddMatiere()" #matiereForm="ngForm">
+          <div class="form-group">
+            <label for="nom">Name</label>
+            <input type="text" id="nom" required [(ngModel)]="matiereFormModel.nom" name="nom" class="form-control">
+          </div>
+          <button class="bg-primary" style="color: white;" mat-button type="submit" [disabled]="!matiereForm.form.valid">{{ isUpdating ? 'Update' : 'Add' }}</button>
+          <button mat-button type="button"   *ngIf="isUpdating" (click)="cancelUpdate()" style="background-color: red;color: white;margin-left: 5px;">Cancel</button>
+        </form>
+      </div>
+  
+      <!-- Colonne de la liste des matières -->
+      <div class="col-md-8">
+        <div *ngFor="let matiere of matieres" class="matiere-card">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ matiere.nom }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-actions>
+              <button mat-button (click)="loadMatiereForUpdate(matiere)">Update</button>
+              <button mat-button (click)="deleteMatiere(matiere.id!)">Delete</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  
