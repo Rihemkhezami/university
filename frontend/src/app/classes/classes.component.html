@@ -1,0 +1,33 @@
+<!-- classe.component.html -->
+<div class="container">
+    
+    <div class="row">
+      <!-- Colonne du formulaire -->
+      <div class="col-md-4">
+        <h2>{{ isUpdating ? 'Update' : 'Add New' }}</h2>
+        <form (ngSubmit)="isUpdating ? onUpdateClasse() : onAddClasse()" #classeForm="ngForm">
+          <div class="form-group">
+            <label for="nom">Name</label>
+            <input type="text" id="nom" required [(ngModel)]="classeFormModel.nom" name="nom" class="form-control">
+          </div>
+          <button class="bg-primary" style="color: white;" mat-button type="submit" [disabled]="!classeForm.form.valid">{{ isUpdating ? 'Update' : 'Add' }}</button>
+          <button mat-button type="button"   *ngIf="isUpdating" (click)="cancelUpdate()" style="background-color: red;color: white;margin-left: 5px;">Cancel</button>
+        </form>
+      </div>
+  
+      <!-- Colonne de la liste des classes -->
+      <div class="col-md-8">
+        <div *ngFor="let classe of classes" class="classe-card">
+          <mat-card>
+            <mat-card-header>
+              <mat-card-title>{{ classe.nom }}</mat-card-title>
+            </mat-card-header>
+            <mat-card-actions>
+              <button mat-button (click)="loadClasseForUpdate(classe)">Update</button>
+              <button mat-button (click)="deleteClasse(classe.id!)">Delete</button>
+            </mat-card-actions>
+          </mat-card>
+        </div>
+      </div>
+    </div>
+  </div>
